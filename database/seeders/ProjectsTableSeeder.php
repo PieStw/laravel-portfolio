@@ -24,6 +24,7 @@ class ProjectsTableSeeder extends Seeder
             $project->image = $faker->imageUrl(640, 480, 'technics');
             $project->url = $faker->url();
             $project->github = 'https://github.com/' . $faker->userName();
+            $project->type_id = $faker->numberBetween(1, 7);
             $project->created_at = now();
             $project->updated_at = now();
 
