@@ -30,6 +30,15 @@
         <input type="text" class="form-control" id="github" name="github" value="{{ $project->github }}">
     </div>
 
+    <div class="mb-3">
+        <label for="type" class="form-label">Type</label>
+        <select name="type_id" class="form-control" id="type">
+            @foreach ($types as $type)
+                <option value="{{ $type->id }}" {{$type->id == $project->type_id ? "selected" : ""}} >{{ $type->name }}</option>
+            @endforeach
+        </select>
+    </div>
+
     <button type="submit" class="btn btn-primary">Salva Progetto</button>
 </form>
 @endsection
