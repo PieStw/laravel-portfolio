@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project;
+use App\Models\Technology;
 use App\Models\Type;
 use Illuminate\Http\Request;
 
@@ -24,7 +25,8 @@ class ProjectController extends Controller
     public function create()
     {
         $types = Type::all();
-        return view('projects.create', compact('types'));
+        $technologies = Technology::all();
+        return view('projects.create', compact('types', 'technologies'));
     }
 
     /**
@@ -43,7 +45,12 @@ class ProjectController extends Controller
         $newProject->type_id = $data['type_id'];
         $newProject->save();
 
-        return redirect()->route('projects.index');
+
+        if ($request->has('technologies')) {
+            $newProject->technologies()->attach($data['technologies']);
+        }
+
+        return redirect()->route('projects.index', $newProject);
     }
 
     /**
@@ -51,7 +58,6 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-
         return view('projects.show', compact('project'));
     }
 
@@ -61,7 +67,8 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $types = Type::all();
-        return view('projects.edit', compact('project', 'types'));
+        $technologies = Technology::all();
+        return view('projects.edit', compact('project', 'types', 'technologies'));
     }
 
     /**
@@ -78,6 +85,12 @@ class ProjectController extends Controller
         $project->github = $data['github'];
         $project->type_id = $data['type_id'];
         $project->save();
+
+        if ($request->has('technologies')) {
+            $project->technologies()->sync($data['technologies']);
+        } else {
+            $project->technologies()->detach();
+        }
 
         return redirect()->route('projects.index');
     }

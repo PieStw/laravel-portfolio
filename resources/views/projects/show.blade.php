@@ -8,4 +8,9 @@
     </p>
     <p>{{ $project->type->name }}</p>
     <p>{{ $project->type->description }}</p>
+    <br>
+    @foreach ($project->technologies as $technology)
+        <p>{{ $technology->name}}</p>
+    @endforeach
+
 @endsection

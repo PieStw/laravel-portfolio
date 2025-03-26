@@ -38,6 +38,15 @@
         </select>
     </div>
 
+    <div class="mb-3">
+        
+        @foreach ($technologies as $tech)
+            <input type="checkbox" name="technologies[]" value="{{ $tech->id }}" id="tag-{{ $tech->id }}">
+            <label for="tag-{{ $tech->id }}">{{ $tech->name }}</label>
+        @endforeach
+        
+    </div>
+
     <button type="submit" class="btn btn-primary">Salva Progetto</button>
 </form>
 
